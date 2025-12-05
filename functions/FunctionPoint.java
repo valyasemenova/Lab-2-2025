@@ -4,7 +4,7 @@ public class FunctionPoint{
     private double x;
     private double y;
 
-    FunctionPoint(double x, double y){
+    public FunctionPoint(double x, double y){
         this.x=x;
         this.y=y;
     }

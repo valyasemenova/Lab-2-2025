@@ -48,16 +48,16 @@ public class TabulatedFunction {
                 return points[i].get_y();
             }
         
-        if (i < points_count - 1) {
-            double x1 = points[i].get_x();
-            double x2 = points[i + 1].get_x();
-            
-            if (x > x1 && x < x2) {
-                double y1 = points[i].get_y();
-                double y2 = points[i + 1].get_y();
-                return y1 + (y2 - y1) * (x - x1) / (x2 - x1);
+            if (i < points_count - 1) {
+                double x1 = points[i].get_x();
+                double x2 = points[i + 1].get_x();
+                
+                if (x > x1 && x < x2) {
+                    double y1 = points[i].get_y();
+                    double y2 = points[i + 1].get_y();
+                    return y1 + (y2 - y1) * (x - x1) / (x2 - x1);
+                }
             }
-        }
     }
     return Double.NaN;
     }
@@ -67,16 +67,15 @@ public class TabulatedFunction {
         }
 
     public FunctionPoint getPoint(int index){
+        if (index < 0 || index >= points_count) {
+         throw new IndexOutOfBoundsException("Выход за границы");
+    }
         return new FunctionPoint(points[index]); 
     }
 
     public void setPoint(int index, FunctionPoint point){
-        if (index < 0) {
-            throw new IndexOutOfBoundsException("Индекс меньше нуля");
-        }
-
-        if (index >= points_count) {
-            throw new IndexOutOfBoundsException("Индекс больше размера");
+        if (index < 0 || index >= points_count) {
+            throw new IndexOutOfBoundsException("Индекс выходит за границы");
         }
 
         if (point == null) {
@@ -165,7 +164,6 @@ public class TabulatedFunction {
 
         if (points_count >= points.length) {
             FunctionPoint[] newPoints = new FunctionPoint[points.length *2];
-            // Копируем старые точки в новый массив
             System.arraycopy(points, 0, newPoints, 0, points_count);
             points = newPoints;
         }
